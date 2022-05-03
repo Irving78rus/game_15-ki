@@ -12,7 +12,7 @@ function App({ items }) {
   useEffect(() => {
     const numbers = [...Array(15).keys()]
       .map((key) => key + 1)
-      .sort(() => Math.random() - 0.5);
+        .sort(() => Math.random() - 0.5);
 
     setItemsForRender(
       items.map((item) => {
@@ -57,6 +57,7 @@ function App({ items }) {
   const again = () => {
     setIsFinished(!isFinished);
     setNewGame(!newGame);
+    setTime(0)
   };
   return (
     <>
