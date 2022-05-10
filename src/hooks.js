@@ -1,7 +1,5 @@
-import { startMove } from "./logik";
+import { startMove } from "./logic";
 import { useContext } from "react";
 import Context from "./context";
 
-export const useStartGame = ( ) => {
-   
-};
+export const useStartGame = () => {};

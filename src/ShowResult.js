@@ -1,5 +1,5 @@
 import React from "react";
-import { gameTime } from "./logik";
+import { gameTime } from "./logic";
 import "./App.css";
 const ShowResult = ({ gameResult, gameId, isRecord }) => {
   return (

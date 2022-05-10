@@ -19,7 +19,6 @@ export const getRandomElement = (arr) => {
 };
 
 export const startMove = (itemsForRender, coordinateEmpty) => {
-   
   let itemsForRenderCopy = [...itemsForRender];
   for (let i = 0; i < 150; i++) {
     // debugger
@@ -31,10 +30,10 @@ export const startMove = (itemsForRender, coordinateEmpty) => {
       item !== randItem
         ? item
         : {
-          ...item,
-          left: coordinateEmpty.CoordinateEmptyX,
-          top: coordinateEmpty.CoordinateEmptyY,
-        }
+            ...item,
+            left: coordinateEmpty.CoordinateEmptyX,
+            top: coordinateEmpty.CoordinateEmptyY,
+          }
     );
 
     coordinateEmpty = {
@@ -60,17 +59,16 @@ export const gameTime = (timeInSecond) => {
   let hours = Math.floor(timeInSecond / 60 / 60);
   let minutes = Math.floor(timeInSecond / 60) - hours * 60;
   let seconds = timeInSecond % 60;
-  return `${hours < 10 ? "0" + hours : hours}  :  ${minutes < 10 ? "0" + minutes : minutes
-    }  : ${seconds < 10 ? "0" + seconds : seconds}`;
+  return `${hours < 10 ? "0" + hours : hours}  :  ${
+    minutes < 10 ? "0" + minutes : minutes
+  }  : ${seconds < 10 ? "0" + seconds : seconds}`;
 };
 
 let maxPoint = 1000;
 export const totalyCount = (count, timeInSecond) => {
-  let result = maxPoint - count * 5 - timeInSecond
+  let result = maxPoint - count * 5 - timeInSecond;
   if (result === 0) {
-    return result
-
+    return result;
   }
   return result;
 };
- 

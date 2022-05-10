@@ -1,7 +1,7 @@
 import "./App.css";
 import React, { useContext, useEffect, useState } from "react";
 import Context from "./context";
-import { startMove } from "./logik";
+import { startMove } from "./logic";
 
 import ShowResult from "./ShowResult";
 function GameResult() {
@@ -26,8 +26,8 @@ function GameResult() {
     let data = new Date().toLocaleDateString();
     let totalResult = { time, totalScore, gameId, data };
     let totalResultForRender = JSON.parse(localStorage.getItem("totalResult"));
-    totalResultForRender.forEach((item) =>
-      totalResult.totalScore > item.totalScore&& setIsRecord(true)  
+    totalResultForRender.forEach(
+      (item) => totalResult.totalScore > item.totalScore && setIsRecord(true)
     );
     totalResultForRender.push(totalResult);
     setGameResult(totalResultForRender);
