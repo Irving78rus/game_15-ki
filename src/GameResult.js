@@ -26,14 +26,18 @@ function GameResult() {
     let data = new Date().toLocaleDateString();
     let totalResult = { time, totalScore, gameId, data };
     let totalResultForRender = JSON.parse(localStorage.getItem("totalResult"));
-    totalResultForRender.forEach(
-      (item) => totalResult.totalScore > item.totalScore && setIsRecord(true)
-    );
+    console.log(totalResultForRender);
+    console.log(totalResult);
+    totalResultForRender.every((item) => {
+      return totalResult.totalScore > item.totalScore
+    }) && setIsRecord(true)
+     
     totalResultForRender.push(totalResult);
     setGameResult(totalResultForRender);
     localStorage.setItem("totalResult", JSON.stringify(totalResultForRender));
   }, []);
   const restartGame = () => {
+    setIsRecord(false)
     setTime(0);
     setTotalScore(0);
     setMoveCount(0);

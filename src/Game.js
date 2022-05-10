@@ -71,7 +71,7 @@ function Game() {
                         }}
                         style={{left: item.left * cellSize,top: item.top * cellSize,}}
                     >
-                        {console.log(123)}
+                        
                         <div className={ moveAuthorized(item, coordinateEmpty)
                         ?"circle circleBorder"
                         :"circle"}
