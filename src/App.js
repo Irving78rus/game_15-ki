@@ -1,92 +1,39 @@
 import "./App.css";
-import React, { useState, useEffect } from "react";
+import React from "react";
+import Start from "./Start";
+import Game from "./Game";
+import GameResult from "./GameResult";
+import Timer from "./Timer";
+import Context from './context'
+import {hooks}from './hooks'
+import { useState } from "react";
 
-const cellSize = 100;
-function App({ items }) {
-  const [emptyLeft, setEmptyLeft] = useState(300);
-  const [emptyTop, setEmptyTop] = useState(300);
-  const [time, setTime] = useState(0);
-  const [isFinished, setIsFinished] = useState(false);
+function App() {
+  const [coordinateEmpty, setCoordinateEmpty] = useState({ CoordinateEmptyX: 3, CoordinateEmptyY: 3 });
+  const [stageOfTheGame, setStageOfTheGame] = useState(0);
   const [itemsForRender, setItemsForRender] = useState([]);
-  const [newGame, setNewGame] = useState(false);
-  useEffect(() => {
-    const numbers = [...Array(15).keys()]
-      .map((key) => key + 1)
-        .sort(() => Math.random() - 0.5);
-
-    setItemsForRender(
-      items.map((item) => {
-        return {
-          id: item.id,
-          number: numbers[item.id],
-          left: (item.id % 4) * cellSize,
-          top: ((item.id - (item.id % 4)) / 4) * cellSize,
-        };
-      })
-    );
-  }, [newGame]);
-  useEffect(() => {
-    if (!isFinished) {
-      setTimeout(() => setTime(time + 1), 1000);
-      console.log(time);
-    }
-  }, [time]);
-
-  useEffect(() => {
-    setIsFinished(
-      itemsForRender.every((cell) => {
-        return cell.number === (cell.top * 4 + cell.left) / 100 + 1;
-      })
-    );
-  }, [itemsForRender]);
-  const Move = (item) => {
-    if (
-      Math.abs(item.left - emptyLeft) <= 100 &&
-      Math.abs(item.top - emptyTop) <= 100 &&
-      Math.abs(item.left + item.top - (emptyLeft + emptyTop)) === 100
-    ) {
-      setItemsForRender(
-        itemsForRender.map((u) =>
-          u.id === item.id ? { ...u, left: emptyLeft, top: emptyTop } : u
-        )
-      );
-      setEmptyTop(item.top);
-      setEmptyLeft(item.left);
-    }
-  };
-  const again = () => {
-    setIsFinished(!isFinished);
-    setNewGame(!newGame);
-    setTime(0)
-  };
+  const [time, setTime] = useState(0);
+  const [gameId, setGameId] = useState('0');
+  const [moveCount, setMoveCount] = useState(0);
+  const [totalScore, setTotalScore] = useState(0);
+  const [gameResult, setGameResult] = useState(JSON.parse(localStorage.getItem("totalResult")) || []);
   return (
-    <>
-      {!isFinished && itemsForRender.length === 15 ? (
-        <div className="App">
-          {itemsForRender.map((item) => (
-            <div
-              className="cell"
-              onClick={() => {
-                Move(item);
-              }}
-              style={{ left: item.left, top: item.top }}
-            >
-              {item.number ? item.number : null}
-            </div>
-          ))}
-          <div
-            className="cell"
-            style={{ left: emptyLeft, top: emptyTop }}
-          ></div>
-        </div>
-      ) : (
-        <div>
-          {`isFinished you time ${time} sec`}
-          <button onClick={again}>начать заново</button>
-        </div>
-      )}
-    </>
+    <Context.Provider value={{
+      coordinateEmpty, setCoordinateEmpty,
+      stageOfTheGame, setStageOfTheGame, itemsForRender,
+      setItemsForRender, time, setTime,
+      moveCount, setMoveCount, totalScore, setTotalScore, gameResult, setGameResult, gameId, setGameId,
+
+    }}>
+      <div >
+        {stageOfTheGame === 0 && <Start />}
+        {stageOfTheGame === 1 && <Game />}
+        {stageOfTheGame === 2 && <GameResult />}
+        {stageOfTheGame === 1 && <Timer />}
+         
+      </div>
+    </Context.Provider>
   );
 }
 
-export default App;
+export default React.memo(App);
