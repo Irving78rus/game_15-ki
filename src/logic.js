@@ -67,7 +67,8 @@ export const gameTime = (timeInSecond) => {
 let maxPoint = 1000;
 export const totalyCount = (count, timeInSecond) => {
   let result = maxPoint - count * 5 - timeInSecond;
-  if (result === 0) {
+  if (result <= 0) {
+    result=0
     return result;
   }
   return result;
