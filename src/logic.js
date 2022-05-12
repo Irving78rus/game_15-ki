@@ -19,14 +19,14 @@ export const getRandomElement = (arr) => {
 };
 
 export const startMove = (itemsForRender, coordinateEmpty) => {
-  let itemsForRenderCopy = [...itemsForRender];
+ 
   for (let i = 0; i < 150; i++) {
     // debugger
-    let itemsWithMoveAuthorized = itemsForRenderCopy.filter((item) =>
+    let itemsWithMoveAuthorized = itemsForRender.filter((item) =>
       moveAuthorized(item, coordinateEmpty)
     );
     let randItem = getRandomElement(itemsWithMoveAuthorized);
-    itemsForRenderCopy = [...itemsForRenderCopy].map((item) =>
+    itemsForRender = [...itemsForRender].map((item) =>
       item !== randItem
         ? item
         : {
@@ -41,7 +41,8 @@ export const startMove = (itemsForRender, coordinateEmpty) => {
       CoordinateEmptyY: randItem.top,
     };
   }
-  return { itemsForRenderCopy, coordinateEmpty };
+   
+  return { itemsForRender, coordinateEmpty };
 };
 
 export const moveAuthorized = (
@@ -65,7 +66,7 @@ export const gameTime = (timeInSecond) => {
 };
 
 let maxPoint = 1000;
-export const totalyCount = (count, timeInSecond) => {
+export const totalCount = (count, timeInSecond) => {
   let result = maxPoint - count * 5 - timeInSecond;
   if (result <= 0) {
     result=0

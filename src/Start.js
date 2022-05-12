@@ -1,19 +1,18 @@
 import "./App.css";
 import React, { useContext, useEffect, useState } from "react";
-import Context from "./context";
-import { createNumbersForCell, setCell, startMove } from "./logic";
+import {Context} from "./context";
+import { createNumbersForCell, setCell } from "./logic";
 import Modal from "./Modal";
 import ShowResult from "./ShowResult";
+import { useStartGame } from "./hooks";
+ 
 function Start() {
   const {
-    setStageOfTheGame,
     setItemsForRender,
-    itemsForRender,
-    setCoordinateEmpty,
-    coordinateEmpty,
     gameResult,
   } = useContext(Context);
-  const [modalVisibileted, setmodalVisibileted] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
+
   useEffect(() => {
     const numbers = createNumbersForCell();
     setItemsForRender(setCell(numbers));
@@ -21,22 +20,15 @@ function Start() {
       localStorage.setItem("totalResult", JSON.stringify([]));
     }
   }, []);
-  const start = () => {
-    setStageOfTheGame(1);
-    const obj = startMove(itemsForRender, coordinateEmpty);
-    setItemsForRender(obj.itemsForRenderCopy);
-    setCoordinateEmpty({
-      CoordinateEmptyX: obj.coordinateEmpty.CoordinateEmptyX,
-      CoordinateEmptyY: obj.coordinateEmpty.CoordinateEmptyY,
-    });
-  };
+
+  const start = useStartGame();
 
   return (
     <div
       onClick={
-        modalVisibileted
+        modalVisible
           ? () => {
-              setmodalVisibileted(false);
+            setModalVisible(false);
             }
           : null
       }
@@ -46,13 +38,13 @@ function Start() {
         <div
           className="question"
           onClick={() => {
-            setmodalVisibileted(!modalVisibileted);
+            setModalVisible(!modalVisible);
           }}
         >
-          ?{modalVisibileted && <Modal />}
+          ?{modalVisible && <Modal />}
         </div>
       </div>
-      <button onClick={start}>Начать игру</button>
+      <button onClick={start.start}>Начать игру</button>
       {gameResult.length > 0 && <ShowResult gameResult={gameResult} />}
     </div>
   );

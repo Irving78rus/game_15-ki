@@ -1,10 +1,11 @@
 import "./App.css";
 import React, { useContext, useEffect } from "react";
-import Context from "./context";
-import { totalyCount } from "./logic";
+import { Context, ContextTime } from "./context";
+import { totalCount, gameTime } from "./logic";
 
 function Timer() {
-  const { time, setTime, setTotalScore, moveCount } = useContext(Context);
+  const { setTotalScore, moveCount, totalScore } = useContext(Context);
+  const { time, setTime } = useContext(ContextTime);
 
   useEffect(() => {
     const gameTime = setInterval(() => setTime((prev) => prev + 1), 1000);
@@ -13,10 +14,15 @@ function Timer() {
     };
   }, []);
   useEffect(() => {
-    setTotalScore(totalyCount(moveCount, time));
-  }, [time]);
+    setTotalScore(totalCount(moveCount, time));
+  }, [time, moveCount]);
 
-  return <></>;
+  return (
+    <>
+      Time {gameTime(time)}
+      <div>Score {totalScore}</div>
+    </>
+  );
 }
 
 export default React.memo(Timer);
