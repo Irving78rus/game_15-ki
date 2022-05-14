@@ -4,9 +4,8 @@ import Start from "./Start";
 import Game from "./Game";
 import GameResult from "./GameResult";
 import Timer from "./Timer";
-import { Context, ContextTime } from "./context";
+import { Context } from "./context";
 import { useState } from "react";
- 
 
 function App() {
   const [coordinateEmpty, setCoordinateEmpty] = useState({
@@ -44,20 +43,15 @@ function App() {
           setGameResult,
           gameId,
           setGameId,
+          time,
+          setTime,
         }}
       >
         <div>
           {stageOfTheGame === 1 && <Game />}
           {stageOfTheGame === 0 && <Start />}
-          <ContextTime.Provider
-            value={{
-              time,
-              setTime,
-            }}
-          >
-            {stageOfTheGame === 2 && <GameResult />}
-            {stageOfTheGame === 1 && <Timer />}
-          </ContextTime.Provider>
+          {stageOfTheGame === 2 && <GameResult />}
+          {stageOfTheGame === 1 && <Timer />}
         </div>
       </Context.Provider>
     </>

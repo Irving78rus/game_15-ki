@@ -4,8 +4,8 @@ import { Context, ContextTime } from "./context";
 import { totalCount, gameTime } from "./logic";
 
 function Timer() {
-  const { setTotalScore, moveCount, totalScore } = useContext(Context);
-  const { time, setTime } = useContext(ContextTime);
+  const { setTotalScore, moveCount, totalScore,time, setTime  } = useContext(Context);
+   
 
   useEffect(() => {
     const gameTime = setInterval(() => setTime((prev) => prev + 1), 1000);

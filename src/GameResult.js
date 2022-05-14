@@ -1,6 +1,6 @@
 import "./App.css";
 import React, { useContext, useEffect } from "react";
-import { Context, ContextTime } from "./context";
+import { Context  } from "./context";
 import { useStartGame } from "./hooks";
 import ShowResult from "./ShowResult";
 function GameResult() {
@@ -11,8 +11,9 @@ function GameResult() {
     gameId,
     isRecord,
     setIsRecord,
+    time
   } = useContext(Context);
-  const { time } = useContext(ContextTime);
+ 
   useEffect(() => {
     setIsRecord(false);
     let data = new Date().toLocaleDateString();

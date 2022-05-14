@@ -1,6 +1,6 @@
 import { startMove } from "./logic";
-import { useContext, useEffect } from "react";
-import {Context} from "./context";
+import { useContext } from "react";
+import {Context } from "./context";
 
 export const useStartGame = () => {
   const {
@@ -10,10 +10,11 @@ export const useStartGame = () => {
     itemsForRender,
     setCoordinateEmpty,
     coordinateEmpty,
-    setTime,
     setTotalScore,
     setMoveCount,
+    setTime 
   } = useContext(Context);
+  
   let a = {
     start: () => {
       const obj = startMove(itemsForRender, coordinateEmpty);
