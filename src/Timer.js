@@ -4,7 +4,7 @@ import { Context, ContextTime } from "./context";
 import { totalCount, gameTime } from "./logic";
 
 function Timer() {
-  const { setTotalScore, moveCount, totalScore } = useContext(Context);
+  // const { setTotalScore, moveCount, totalScore } = useContext(Context);
   const { time, setTime } = useContext(ContextTime);
 
   useEffect(() => {
@@ -13,14 +13,14 @@ function Timer() {
       clearInterval(gameTime);
     };
   }, []);
-  useEffect(() => {
-    setTotalScore(totalCount(moveCount, time));
-  }, [ moveCount,time]);
+  // useEffect(() => {
+  //   setTotalScore(totalCount(moveCount, time));
+  // }, [ moveCount,time]);
 
   return (
     <>
       Time {gameTime(time)}
-      <div>Score {totalScore}</div>
+      {/* <div>Score {totalScore}</div> */}
     </>
   );
 }

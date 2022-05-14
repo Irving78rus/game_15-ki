@@ -58,7 +58,10 @@ function App() {
             [stageOfTheGame]
           )}
           {stageOfTheGame === 0 && <Start />}
-          <ContextTime.Provider
+          
+        </div>
+      </Context.Provider>
+      <ContextTime.Provider
             value={{
               time,
               setTime,
@@ -67,8 +70,6 @@ function App() {
             {stageOfTheGame === 2 && <GameResult />}
             {stageOfTheGame === 1 && <Timer />}
           </ContextTime.Provider>
-        </div>
-      </Context.Provider>
     </>
   );
 }
