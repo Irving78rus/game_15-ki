@@ -1,6 +1,6 @@
 import "./App.css";
 import React, { useContext, useEffect, useMemo } from "react";
-import {Context} from "./context";
+import { Context } from "./context";
 import { moveAuthorized, gameTime } from "./logic";
 import uniqid from "uniqid";
 const cellSize = 100;
@@ -15,12 +15,12 @@ function Game() {
     setGameId,
     coordinateEmpty,
     setCoordinateEmpty,
-    moveCount,
   } = useContext(Context);
   useEffect(() => {
     setGameId(uniqid());
   }, []);
   const Move = (item) => {
+    const equalItem = itemsForRender.filter((cell) => cell === item);
     if (moveAuthorized(item, coordinateEmpty)) {
       setItemsForRender((prev) =>
         prev.map((cell) =>
@@ -39,10 +39,6 @@ function Game() {
       });
 
       setMoveCount((prev) => {
-        let nowCount = moveCount + 1;
-        console.log(
-          `moveCount has been changed: было ${prev} стало ${nowCount}`
-        );
         return prev + 1;
       });
     }
@@ -62,39 +58,42 @@ function Game() {
     setTotalScore(0);
     setStageOfTheGame(2);
   };
+
+  const createCell = (item) => {
+    return (
+      <div
+        key={item.id}
+        className="cell"
+        onClick={() => {
+          Move(item);
+        }}
+        style={{
+          left: item.left * cellSize,
+          top: item.top * cellSize,
+        }}
+      >
+        <div
+          className={
+            moveAuthorized(item, coordinateEmpty)
+              ? "circle circleBorder"
+              : "circle"
+          }
+        >
+          {console.log("test")}
+          {item.number ? item.number : null}
+        </div>
+      </div>
+    );
+  };
+
   return (
     <>
-      {console.log("game return")}
       {useMemo(
         () => (
           <div>
             <button onClick={capitulate}>Признаю поражение</button>
             <div className="App">
-              {itemsForRender.map((item) => (
-                <div
-                  key={item.id}
-                  className="cell"
-                  onClick={() => {
-                    Move(item);
-                  }}
-                  style={{
-                    left: item.left * cellSize,
-                    top: item.top * cellSize,
-                  }}
-                >
-                  <div
-                    className={
-                      moveAuthorized(item, coordinateEmpty)
-                        ? "circle circleBorder"
-                        : "circle"
-                    }
-                  >
-                    {console.log("test")}
-                    {item.number ? item.number : null}
-                  </div>
-                </div>
-              ))}
-
+              {itemsForRender.map((item) => createCell(item))}
               <div
                 className="cell empty"
                 style={{

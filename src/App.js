@@ -4,11 +4,11 @@ import Start from "./Start";
 import Game from "./Game";
 import GameResult from "./GameResult";
 import Timer from "./Timer";
-import {Context,ContextTime} from "./context";
+import { Context, ContextTime } from "./context";
 import { useState, useMemo } from "react";
+import Test from "./Test";
 
 function App() {
- 
   const [coordinateEmpty, setCoordinateEmpty] = useState({
     CoordinateEmptyX: 3,
     CoordinateEmptyY: 3,
@@ -23,47 +23,53 @@ function App() {
     JSON.parse(localStorage.getItem("totalResult")) || []
   );
   const [isRecord, setIsRecord] = useState(false);
+
   return (
-    <Context.Provider
-      value={{
-        isRecord,
-        setIsRecord,
-        coordinateEmpty,
-        setCoordinateEmpty,
-        stageOfTheGame,
-        setStageOfTheGame,
-        itemsForRender,
-        setItemsForRender,
-        moveCount,
-        setMoveCount,
-        totalScore,
-        setTotalScore,
-        gameResult,
-        setGameResult,
-        gameId,
-        setGameId,
-      }}
-    >
-      <div>
-        {useMemo(
-          () => stageOfTheGame === 1 && 
-          <div>
-            {console.log('app')} <Game />
-          </div>,
-          [coordinateEmpty, stageOfTheGame, itemsForRender,moveCount]
-        )}
-        {stageOfTheGame === 0 && <Start />}
-        <ContextTime.Provider
-      value={{
-        time,
-        setTime,
-      }}>
-        {stageOfTheGame === 2 && <GameResult />}
-        {stageOfTheGame === 1 && <Timer />}
-        </ContextTime.Provider> 
-      </div>
-      
-    </Context.Provider>
+    <>
+      {/* <Test/> */}
+      <Context.Provider
+        value={{
+          isRecord,
+          setIsRecord,
+          coordinateEmpty,
+          setCoordinateEmpty,
+          stageOfTheGame,
+          setStageOfTheGame,
+          itemsForRender,
+          setItemsForRender,
+          moveCount,
+          setMoveCount,
+          totalScore,
+          setTotalScore,
+          gameResult,
+          setGameResult,
+          gameId,
+          setGameId,
+        }}
+      >
+        <div>
+          {useMemo(
+            () =>
+              stageOfTheGame === 1 && (
+                <div>
+                  {console.log("app use memo")} <Game />
+                </div>
+              ),
+            [stageOfTheGame]
+          )}
+          {stageOfTheGame === 0 && <Start />}
+          <ContextTime.Provider
+            value={{
+              time,
+              setTime,
+            }}
+          >
+            {stageOfTheGame === 2 && <GameResult />}
+            {stageOfTheGame === 1 && <Timer />}
+          </ContextTime.Provider>
+        </div>
+      </Context.Provider>
+    </>
   );
 }
 

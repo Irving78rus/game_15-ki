@@ -15,7 +15,7 @@ function Timer() {
   }, []);
   useEffect(() => {
     setTotalScore(totalCount(moveCount, time));
-  }, [time, moveCount]);
+  }, [ moveCount,time]);
 
   return (
     <>
