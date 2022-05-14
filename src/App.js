@@ -5,8 +5,8 @@ import Game from "./Game";
 import GameResult from "./GameResult";
 import Timer from "./Timer";
 import { Context, ContextTime } from "./context";
-import { useState, useMemo } from "react";
-import Test from "./Test";
+import { useState } from "react";
+ 
 
 function App() {
   const [coordinateEmpty, setCoordinateEmpty] = useState({
@@ -26,7 +26,6 @@ function App() {
 
   return (
     <>
-      {/* <Test/> */}
       <Context.Provider
         value={{
           isRecord,
@@ -48,20 +47,9 @@ function App() {
         }}
       >
         <div>
-          {useMemo(
-            () =>
-              stageOfTheGame === 1 && (
-                <div>
-                  {console.log("app use memo")} <Game />
-                </div>
-              ),
-            [stageOfTheGame]
-          )}
+          {stageOfTheGame === 1 && <Game />}
           {stageOfTheGame === 0 && <Start />}
-          
-        </div>
-      </Context.Provider>
-      <ContextTime.Provider
+          <ContextTime.Provider
             value={{
               time,
               setTime,
@@ -70,6 +58,8 @@ function App() {
             {stageOfTheGame === 2 && <GameResult />}
             {stageOfTheGame === 1 && <Timer />}
           </ContextTime.Provider>
+        </div>
+      </Context.Provider>
     </>
   );
 }
